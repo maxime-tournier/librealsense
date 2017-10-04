@@ -7,9 +7,12 @@ DIR="$( cd "$( dirname "$0" )" && pwd )"
 sudo apt-get install dpkg-dev
 
 # Cleanup from possibly failed installations
-rm -fr ~/uvc_patch
+
 mkdir -p ~/uvc_patch
 cd ~/uvc_patch
+LINUXDIR=`find . -maxdepth 1 -mindepth 1 -type d`
+rm -rf $LINUXDIR
+
 
 # Get the Linux sources and headers for this kernel version
 apt-get source linux-image-$(uname -r)
