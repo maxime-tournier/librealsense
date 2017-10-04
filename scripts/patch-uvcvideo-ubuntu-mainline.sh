@@ -28,6 +28,11 @@ patch -p1 < $DIR/realsense-camera-formats.patch
 cp /boot/config-`uname -r` .config
 cp  /usr/src/linux-headers-`uname -r`/Module.symvers .
 make scripts oldconfig modules_prepare
+
+echo 'paching utsrelease.h'
+echo $PWD
+sed -ie "s/\".*\"/\"$(uname -r)\"/g" include/generated/utsrelease.h
+
 cd drivers/media/usb/uvc
 cp $KBASE/Module.symvers .
 make -C $KBASE M=$KBASE/drivers/media/usb/uvc/ modules
@@ -36,4 +41,5 @@ make -C $KBASE M=$KBASE/drivers/media/usb/uvc/ modules
 sudo modprobe -r uvcvideo
 sudo rm /lib/modules/`uname -r`/kernel/drivers/media/usb/uvc/uvcvideo.ko
 sudo cp $KBASE/drivers/media/usb/uvc/uvcvideo.ko /lib/modules/`uname -r`/kernel/drivers/media/usb/uvc/uvcvideo.ko
+
 
